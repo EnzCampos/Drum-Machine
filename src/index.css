@@ -14,12 +14,21 @@ code {
 
 #drum-machine {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 60vh;
 }
 
-.drumKey {
+#display {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: aqua;
+  width: 100px;
+  text-align: center;
+}
+
+.drum-pad {
   background-color: rgb(174, 176, 179);
   padding: 20px;
   text-align: center;

@@ -1,7 +1,7 @@
 import React from "react"
 
 function App() {
-  const [ display, setDisplay] = React.useState("")
+  const [ display, setDisplay] = React.useState(" ")
 
   const audioFiles = [
     {"key": "Q", "audio": "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3", "text": "Heater 1"},
@@ -15,12 +15,17 @@ function App() {
     {"key": "C", "audio": "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3", "text": "Closed-HH"},]
 
   const drumKeys = audioFiles.map((audio) => 
-    <div id={audio.key} className="drumKey">
+    <div className="drum-pad" onClick={() => playSound(audio.key, audio.text)}>
       <audio className="clip" id={audio.key} src={audio.audio} />
       {audio.key}
     </div>
   )
 
+  function playSound(id,text) {
+    const audioElem = document.getElementById(id)
+    audioElem.play()
+    setDisplay(text)
+  }
 
   return (
     <div id="drum-machine">
