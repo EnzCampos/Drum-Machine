@@ -15,22 +15,40 @@ function App() {
     {"key": "C", "audio": "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3", "text": "Closed-HH"},]
 
   const drumKeys = audioFiles.map((audio) => 
-    <div className="drum-pad" onClick={() => playSound(audio.key, audio.text)}>
+    <div id={audio.text} className="drum-pad" onClick={() => playSound(audio.key, audio.text)} key={audio.key}>
       <audio className="clip" id={audio.key} src={audio.audio} />
       {audio.key}
     </div>
   )
 
+  React.useEffect(()=>{
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    }
+  },[])
+
   function playSound(id,text) {
-    const audioElem = document.getElementById(id)
-    audioElem.play()
-    setDisplay(text)
+    const audioElem = document.getElementById(id);
+    audioElem.play();
+    setDisplay(text);
+  }
+
+  function handleKeyPress(e) {
+    const keysToCheck = audioFiles.map((audio) => audio.key);
+    const audioElem = document.getElementById(e.key.toUpperCase());
+    console.log(audioFiles[keysToCheck.indexOf(e.key.toUpperCase())])
+    if (keysToCheck.includes(e.key.toUpperCase())) {
+      audioElem.play();
+      const displayText = audioFiles[keysToCheck.indexOf(e.key.toUpperCase())].text;
+      setDisplay(displayText)
+    }
   }
 
   return (
     <div id="drum-machine">
       <div id="display">{display}</div>
-      <div class="grid">{drumKeys}</div>
+      <div className="grid">{drumKeys}</div>
     </div>
   );
 }
